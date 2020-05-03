@@ -86,30 +86,32 @@ public class ZoneTopologyListener extends UPnPEventAdapter {
 		for (Element property : event.getProperties()) {
 
 			if (property.getName().equals("ZoneGroupState")) {
-				List<Element> zoneGroups = property.getChild("ZoneGroups").getChildren("ZoneGroup");
+				Element zoneGroupsElement = property.getChild("ZoneGroups");
+				if (zoneGroupsElement != null) {
+					List<Element> zoneGroups = zoneGroupsElement.getChildren("ZoneGroup");
 
-				
-				for (Element zoneGroup : zoneGroups) {
-					ArrayList<String> allDevicesInZone = new ArrayList<String>();
-					for (Element device : zoneGroup.getChildren("ZoneGroupMember")) {
-						String deviceName = device.getAttributeValue("ZoneName");
-						allDevicesInZone.add(deviceName);
-					}
-					if(allDevicesInZone.contains(ownName)) {
-						//Check if we have a group change event
-						if(!groupState.isEmpty()) {
-							
-							if( !groupState.containsAll(allDevicesInZone) || groupState.size() != allDevicesInZone.size()) {
-								groupState.clear();
-								for (SonosEventListener listener : listeners) {
-									listener.groupChanged(allDevicesInZone);
+					for (Element zoneGroup : zoneGroups) {
+						ArrayList<String> allDevicesInZone = new ArrayList<String>();
+						for (Element device : zoneGroup.getChildren("ZoneGroupMember")) {
+							String deviceName = device.getAttributeValue("ZoneName");
+							allDevicesInZone.add(deviceName);
+						}
+						if (allDevicesInZone.contains(ownName)) {
+							//Check if we have a group change event
+							if (!groupState.isEmpty()) {
+
+								if (!groupState.containsAll(allDevicesInZone) || groupState.size() != allDevicesInZone.size()) {
+									groupState.clear();
+									for (SonosEventListener listener : listeners) {
+										listener.groupChanged(allDevicesInZone);
+									}
 								}
 							}
+							groupState.addAll(allDevicesInZone);
+
 						}
-						groupState.addAll(allDevicesInZone);
-						
+						devices.addAll(allDevicesInZone);
 					}
-					devices.addAll(allDevicesInZone);
 				}
 			}
 		}

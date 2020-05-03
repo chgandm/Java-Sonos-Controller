@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>github.com.kilianB</groupId>
 	<artifactId>sonos-controller</artifactId>
-	<version>2.0.1</version>
+	<version>2.0.2</version>
 
 	<description>A java library allowing to control sonos speakers via UPnP.</description>
 	<url>https://github.com/KilianB/sonosControllerPrivate</url>
@@ -89,20 +89,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<excludePackageNames>*.example</excludePackageNames>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -150,7 +136,7 @@
 		<dependency>
 			<groupId>io.undertow</groupId>
 			<artifactId>undertow-core</artifactId>
-			<version>1.4.17</version>
+			<version>1.4.17.Final</version>
 		</dependency>
 
 		<dependency>
@@ -182,9 +168,9 @@
 	<!-- Environment Settings -->
 	<distributionManagement>
 		<repository>
-			<id>bintray-kilianb-maven</id>
-			<name>kilianb-maven</name>
-			<url>https://api.bintray.com/maven/kilianb/${bintrayRepository}//${bintrayPackage}/</url>
+			<id>github</id>
+			<name>chgandm</name>
+			<url>https://maven.pkg.github.com/chgandm/Java-Sonos-Controller</url>
 		</repository>
 	</distributionManagement>
 
